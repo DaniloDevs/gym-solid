@@ -1,5 +1,5 @@
 import { server } from '.'
-import { env } from '../env/env'
+import { env } from './env'
 
 server
    .listen({
