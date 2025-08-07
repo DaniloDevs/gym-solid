@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  api-solid-pg:
+    image: bitnami/postgresql:latest
+    container_name: api-solid-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=ignitenode03
+    volumes:
+      - pg_data:/bitnami/postgresql
+
+volumes:
+  pg_data:
