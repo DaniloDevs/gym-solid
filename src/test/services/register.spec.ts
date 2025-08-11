@@ -1,6 +1,6 @@
 import { UserAlreadyExistsError } from '@/_errors/user-alredy-exists'
 import { InMememoryUserRepository } from '@/repositories/in-memory/user-repository'
-import { RegisterService } from '@/service/register'
+import { RegisterService } from '@/services/register'
 import { compare } from 'bcryptjs'
 import { describe, expect, it } from 'vitest'
 
@@ -45,7 +45,7 @@ describe('Register Services', () => {
          password: '123456',
       })
 
-      expect(() =>
+      await expect(() =>
          service.execute({
             name: 'John Doe',
             email,
