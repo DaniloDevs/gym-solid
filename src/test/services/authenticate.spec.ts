@@ -2,13 +2,17 @@ import { InvalidCredentilsError } from '@/_errors/invalid-credentials'
 import { InMememoryUserRepository } from '@/repositories/in-memory/user-repository'
 import { AuthenticateService } from '@/services/authenticate'
 import { hash } from 'bcryptjs'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Authenticate Services', () => {
-   it('should be able to register ', async () => {
-      const repository = new InMememoryUserRepository()
-      const service = new AuthenticateService(repository)
+   let repository: InMememoryUserRepository
+   let service: AuthenticateService
 
+   beforeEach(() => {
+      repository = new InMememoryUserRepository()
+      service = new AuthenticateService(repository)
+   })
+   it('should be able to register ', async () => {
       repository.create({
          name: 'John Doe',
          email: 'jhon@exemple.com',
@@ -24,9 +28,6 @@ describe('Authenticate Services', () => {
    })
 
    it('should not be albe authenticate with wrong email ', async () => {
-      const repository = new InMememoryUserRepository()
-      const service = new AuthenticateService(repository)
-
       await expect(
          service.execute({
             email: 'jhon@exemple.com',
@@ -36,9 +37,6 @@ describe('Authenticate Services', () => {
    })
 
    it('should be able to register ', async () => {
-      const repository = new InMememoryUserRepository()
-      const service = new AuthenticateService(repository)
-
       repository.create({
          name: 'John Doe',
          email: 'jhon@exemple.com',
