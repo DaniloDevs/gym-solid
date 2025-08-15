@@ -4,6 +4,12 @@ import { type Prisma, type User } from '@prisma/client'
 export class InMememoryUserRepository implements IUserRepository {
    public itens: User[] = []
 
+   async findById(id: string): Promise<User | null> {
+      const user = this.itens.find((user) => user.id === id)
+
+      return user ? user : null
+   }
+
    async findByEmail(email: string): Promise<User | null> {
       const user = this.itens.find((user) => user.email === email)
 
