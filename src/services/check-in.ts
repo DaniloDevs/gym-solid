@@ -1,6 +1,7 @@
 import { ResourceNotFoundError } from '@/_errors/resource-not-found'
 import { type IGymRepository } from './../repositories/gyms-repository'
 import { type ICheckInRepository } from '@/repositories/check-in-repository'
+import { getDistanceBetweenCordinates } from '@/utils/get-distance-between-coordinate'
 
 interface CheckInRequest {
    userId: string
@@ -15,10 +16,32 @@ export class CheckInService {
       private gymRepository: IGymRepository,
    ) {}
 
-   async execute({ userId, gymId }: CheckInRequest) {
+   async execute({
+      userId,
+      gymId,
+      userLatitude,
+      userLongitude,
+   }: CheckInRequest) {
       const gym = await this.gymRepository.findById(gymId)
 
       if (!gym) throw new ResourceNotFoundError()
+
+      const distance = getDistanceBetweenCordinates(
+         {
+            latitude: userLatitude,
+            longitude: userLongitude,
+         },
+         {
+            latitude: gym.latitude.toNumber(),
+            longitude: gym.longitude.toNumber(),
+         },
+      )
+
+      const MAX_DISTANCE_IN_KM = 0.1
+
+      if (distance > MAX_DISTANCE_IN_KM) {
+         throw new Error()
+      }
 
       const checkInOnSameDay = await this.checkInRepository.findByUserIdOnDate(
          userId,

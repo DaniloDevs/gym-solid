@@ -14,6 +14,15 @@ describe('Check in Services', () => {
       gymRepository = new InMememoryGymRepository()
       checkInService = new CheckInService(checkInRepository, gymRepository)
 
+      gymRepository.itens.push({
+         id: 'gym-01',
+         title: 'C# Gym',
+         description: 'Fazendo o teste da gym',
+         phone: '',
+         latitude: new Decimal(-22.7878316),
+         longitude: new Decimal(-43.3131158),
+      })
+
       vi.useFakeTimers()
    })
 
@@ -22,20 +31,11 @@ describe('Check in Services', () => {
    })
 
    it('should be able to check in ', async () => {
-      gymRepository.itens.push({
-         id: 'gym-01',
-         title: 'Java Gym',
-         description: 'Fazendo o teste da gym',
-         phone: '',
-         latitude: new Decimal(0),
-         longitude: new Decimal(0),
-      })
-
       const { checkIn } = await checkInService.execute({
          gymId: 'gym-01',
          userId: 'user-01',
-         userLatitude: 0,
-         userLongitude: 0,
+         userLatitude: -22.7878316,
+         userLongitude: -43.3131158,
       })
 
       expect(checkIn.id).toEqual(expect.any(String))
@@ -44,28 +44,19 @@ describe('Check in Services', () => {
    it('should not be able to check in twice in the same day ', async () => {
       vi.setSystemTime(new Date(2021, 0, 25, 8, 0, 0))
 
-      gymRepository.itens.push({
-         id: 'gym-01',
-         title: 'Java Gym',
-         description: 'Fazendo o teste da gym',
-         phone: '',
-         latitude: new Decimal(0),
-         longitude: new Decimal(0),
-      })
-
       await checkInService.execute({
          gymId: 'gym-01',
          userId: 'user-01',
-         userLatitude: 0,
-         userLongitude: 0,
+         userLatitude: -22.7878316,
+         userLongitude: -43.3131158,
       })
 
       await expect(() =>
          checkInService.execute({
             gymId: 'gym-01',
             userId: 'user-01',
-            userLatitude: 0,
-            userLongitude: 0,
+            userLatitude: -22.7878316,
+            userLongitude: -43.3131158,
          }),
       ).rejects.toBeInstanceOf(Error)
    })
@@ -73,20 +64,11 @@ describe('Check in Services', () => {
    it('should be able to check in twice but in different days', async () => {
       vi.setSystemTime(new Date(2021, 0, 25, 8, 0, 0))
 
-      gymRepository.itens.push({
-         id: 'gym-01',
-         title: 'Java Gym',
-         description: 'Fazendo o teste da gym',
-         phone: '',
-         latitude: new Decimal(0),
-         longitude: new Decimal(0),
-      })
-
       await checkInService.execute({
          gymId: 'gym-01',
          userId: 'user-01',
-         userLatitude: 0,
-         userLongitude: 0,
+         userLatitude: -22.7878316,
+         userLongitude: -43.3131158,
       })
 
       vi.setSystemTime(new Date(2021, 0, 29, 8, 0, 0))
@@ -94,10 +76,30 @@ describe('Check in Services', () => {
       const { checkIn } = await checkInService.execute({
          gymId: 'gym-01',
          userId: 'user-01',
-         userLatitude: 0,
-         userLongitude: 0,
+         userLatitude: -22.7878316,
+         userLongitude: -43.3131158,
       })
 
       expect(checkIn.id).toEqual(expect.any(String))
+   })
+
+   it('should not be able to check in on distant gym', async () => {
+      gymRepository.itens.push({
+         id: 'gym-02',
+         title: 'C# Gym',
+         description: 'Fazendo o teste da gym',
+         phone: '',
+         latitude: new Decimal(-22.9335783),
+         longitude: new Decimal(-43.2401386),
+      })
+
+      await expect(() =>
+         checkInService.execute({
+            gymId: 'gym-02',
+            userId: 'user-01',
+            userLatitude: -22.7878316,
+            userLongitude: -43.3131158,
+         }),
+      ).rejects.toBeInstanceOf(Error)
    })
 })
