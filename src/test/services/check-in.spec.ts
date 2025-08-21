@@ -1,3 +1,5 @@
+import { MaxDistanceError } from '@/_errors/max-distance'
+import { MaxNumberOfCheckInsError } from '@/_errors/max-number-of-check-ins'
 import { InMememoryCheckInRepository } from '@/repositories/in-memory/check-in-repository'
 import { InMememoryGymRepository } from '@/repositories/in-memory/gym-repository'
 import { CheckInService } from '@/services/check-in'
@@ -9,18 +11,18 @@ describe('Check in Services', () => {
    let gymRepository: InMememoryGymRepository
    let checkInService: CheckInService
 
-   beforeEach(() => {
+   beforeEach(async () => {
       checkInRepository = new InMememoryCheckInRepository()
       gymRepository = new InMememoryGymRepository()
       checkInService = new CheckInService(checkInRepository, gymRepository)
 
-      gymRepository.itens.push({
+      await gymRepository.create({
          id: 'gym-01',
          title: 'C# Gym',
          description: 'Fazendo o teste da gym',
          phone: '',
-         latitude: new Decimal(-22.7878316),
-         longitude: new Decimal(-43.3131158),
+         latitude: -22.7878316,
+         longitude: -43.3131158,
       })
 
       vi.useFakeTimers()
@@ -58,7 +60,7 @@ describe('Check in Services', () => {
             userLatitude: -22.7878316,
             userLongitude: -43.3131158,
          }),
-      ).rejects.toBeInstanceOf(Error)
+      ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
    })
 
    it('should be able to check in twice but in different days', async () => {
@@ -100,6 +102,6 @@ describe('Check in Services', () => {
             userLatitude: -22.7878316,
             userLongitude: -43.3131158,
          }),
-      ).rejects.toBeInstanceOf(Error)
+      ).rejects.toBeInstanceOf(MaxDistanceError)
    })
 })
