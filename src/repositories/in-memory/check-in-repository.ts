@@ -50,4 +50,26 @@ export class InMememoryCheckInRepository implements ICheckInRepository {
    async countByUserId(userId: string) {
       return this.itens.filter((item) => item.user_id === userId).length
    }
+
+   async findById(id: string) {
+      const checkIn = this.itens.find((item) => item.id === id)
+
+      if (!checkIn) {
+         return null
+      }
+
+      return checkIn
+   }
+
+   async save(checkIn: CheckIn) {
+      const checkInIndex = this.itens.findIndex(
+         (item) => item.id === checkIn.id,
+      )
+
+      if (checkInIndex >= 0) {
+         this.itens[checkInIndex] = checkIn
+      }
+
+      return checkIn
+   }
 }
