@@ -1,5 +1,5 @@
-import { MaxDistanceError } from '@/_errors/max-distance'
-import { MaxNumberOfCheckInsError } from '@/_errors/max-number-of-check-ins'
+import { MaxDistanceError } from '@/services/_errors/max-distance'
+import { MaxNumberOfCheckInsError } from '@/services/_errors/max-number-of-check-ins'
 import { InMememoryCheckInRepository } from '@/repositories/in-memory/check-in-repository'
 import { InMememoryGymRepository } from '@/repositories/in-memory/gym-repository'
 import { CheckInService } from '@/services/check-in'

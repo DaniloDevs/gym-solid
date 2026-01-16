@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/_errors/resource-not-found'
+import { ResourceNotFoundError } from '@/services/_errors/resource-not-found'
 import { InMememoryUserRepository } from '@/repositories/in-memory/user-repository'
 import { GetUserProfileService } from '@/services/get-user-profile'
 import { hash } from 'bcryptjs'

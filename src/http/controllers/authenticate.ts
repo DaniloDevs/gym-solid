@@ -1,4 +1,4 @@
-import { InvalidCredentilsError } from '@/_errors/invalid-credentials'
+import { InvalidCredentilsError } from '@/services/_errors/invalid-credentials'
 import { MakeAuthenticateService } from '@/services/factories/make-authenticate-service'
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import z from 'zod'

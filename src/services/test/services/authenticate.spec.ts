@@ -1,4 +1,4 @@
-import { InvalidCredentilsError } from '@/_errors/invalid-credentials'
+import { InvalidCredentilsError } from '@/services/_errors/invalid-credentials'
 import { InMememoryUserRepository } from '@/repositories/in-memory/user-repository'
 import { AuthenticateService } from '@/services/authenticate'
 import { hash } from 'bcryptjs'

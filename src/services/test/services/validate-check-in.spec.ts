@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/_errors/resource-not-found'
+import { ResourceNotFoundError } from '@/services/_errors/resource-not-found'
 import { InMememoryCheckInRepository } from '@/repositories/in-memory/check-in-repository'
 import { ValidateCheckInService } from '@/services/validate-check-in'
 import { expect, describe, it, beforeEach, afterEach, vi } from 'vitest'

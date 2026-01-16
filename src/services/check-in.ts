@@ -1,9 +1,9 @@
-import { ResourceNotFoundError } from '@/_errors/resource-not-found'
+import { ResourceNotFoundError } from '@/services/_errors/resource-not-found'
 import { type IGymRepository } from './../repositories/gyms-repository'
 import { type ICheckInRepository } from '@/repositories/check-in-repository'
 import { getDistanceBetweenCordinates } from '@/utils/get-distance-between-coordinate'
-import { MaxDistanceError } from '@/_errors/max-distance'
-import { MaxNumberOfCheckInsError } from '@/_errors/max-number-of-check-ins'
+import { MaxDistanceError } from '@/services/_errors/max-distance'
+import { MaxNumberOfCheckInsError } from '@/services/_errors/max-number-of-check-ins'
 
 interface CheckInRequest {
    userId: string

@@ -1,4 +1,4 @@
-import { InvalidCredentilsError } from '@/_errors/invalid-credentials'
+import { InvalidCredentilsError } from '@/services/_errors/invalid-credentials'
 import type { IUserRepository } from '@/repositories/user-repositoy'
 import { compare } from 'bcryptjs'
 

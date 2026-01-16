@@ -1,4 +1,4 @@
-import { UserAlreadyExistsError } from '@/_errors/user-alredy-exists'
+import { UserAlreadyExistsError } from '@/services/_errors/user-alredy-exists'
 import { InMememoryUserRepository } from '@/repositories/in-memory/user-repository'
 import { RegisterService } from '@/services/register'
 import { compare } from 'bcryptjs'
