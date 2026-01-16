@@ -17,10 +17,21 @@ export default async function authenticateController(
    try {
       const authenticateService = MakeAuthenticateService()
 
-      await authenticateService.execute({
+      const { user } = await authenticateService.execute({
          email,
          password,
       })
+
+      const token = await reply.jwtSign(
+         {},
+         {
+            sign: {
+               sub: user.id,
+            },
+         },
+      )
+
+      return reply.status(200).send({ token })
    } catch (err) {
       if (err instanceof InvalidCredentilsError) {
          return reply.status(400).send({ message: err.message })
@@ -28,6 +39,4 @@ export default async function authenticateController(
 
       throw err
    }
-
-   return reply.status(200).send()
 }
