@@ -3,6 +3,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginPrettier from "eslint-plugin-prettier";
+import unusedImports from "eslint-plugin-unused-imports";
 
 export default [
   js.configs.recommended,
@@ -27,9 +28,15 @@ export default [
     plugins: {
       "@typescript-eslint": tseslint.plugin,
       prettier: eslintPluginPrettier,
+      "unused-imports": unusedImports,
     },
 
     rules: {
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" },
+      ],
       "no-eval": "error",
       "no-implied-eval": "error",
       "no-new-func": "error",
