@@ -9,5 +9,5 @@ export default async function GymRoutes(server: FastifyInstance) {
 
    server.get('/gyms/search', searchController)
    server.get('/gyms/nearby', nearbyController)
-   server.get('/gyms/nearby', createController)
+   server.post('/gyms', createController)
 }
