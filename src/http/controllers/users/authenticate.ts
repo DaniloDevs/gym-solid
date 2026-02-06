@@ -46,7 +46,7 @@ export default async function authenticateController(
             path: '/',
             secure: true,
             httpOnly: true,
-				sameSite: true,
+            sameSite: true,
          })
          .status(200)
          .send({ token })

@@ -11,7 +11,7 @@ export const server = fastify()
 server.register(fastifyJwt, {
    secret: env.JWT_SECRET,
    cookie: {
-      cookieName:'refreshToken',
+      cookieName: 'refreshToken',
       signed: false,
    },
    sign: {
