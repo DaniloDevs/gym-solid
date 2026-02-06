@@ -31,7 +31,25 @@ export default async function authenticateController(
          },
       )
 
-      return reply.status(200).send({ token })
+      const refreshToken = await reply.jwtSign(
+         {},
+         {
+            sign: {
+               sub: user.id,
+               expiresIn: '7d',
+            },
+         },
+      )
+
+      return reply
+         .setCookie('refreshToken', refreshToken, {
+            path: '/',
+            secure: true,
+            httpOnly: true,
+				sameSite: true,
+         })
+         .status(200)
+         .send({ token })
    } catch (err) {
       if (err instanceof InvalidCredentilsError) {
          return reply.status(400).send({ message: err.message })
