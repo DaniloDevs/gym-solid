@@ -5,7 +5,7 @@ import { metricsController } from './metrics'
 import { createController } from './create'
 import { validateController } from './validate'
 
-export default async function CheckINRoutes(server: FastifyInstance) {
+export default async function CheckInRoutes(server: FastifyInstance) {
    server.addHook('onRequest', VerifyJwt)
 
    server.get('/check-ins/history', historyController)

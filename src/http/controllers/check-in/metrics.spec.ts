@@ -1,7 +1,7 @@
 import request from 'supertest'
 import { server } from '@/index'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
+import { CreateAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 import { prisma } from '@/lib/prisma'
 
 describe('Check-in Metrics (e2e)', () => {
@@ -14,7 +14,7 @@ describe('Check-in Metrics (e2e)', () => {
    })
 
    it('should be able to get the total count of check-ins', async () => {
-      const { token } = await createAndAuthenticateUser(server)
+      const { token } = await CreateAndAuthenticateUser(server)
 
       const user = await prisma.user.findFirstOrThrow()
 
@@ -45,6 +45,6 @@ describe('Check-in Metrics (e2e)', () => {
          .send()
 
       expect(response.statusCode).toEqual(200)
-      expect(response.body.checkInsCount).toEqual(2)
+      expect(response.body.checkInCount).toEqual(2)
    })
 })

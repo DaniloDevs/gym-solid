@@ -5,6 +5,7 @@ import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
 import GymRoutes from './http/controllers/gym/routes'
 import UserRoutes from './http/controllers/users/routes'
+import CheckInRoutes from './http/controllers/check-in/routes'
 
 export const server = fastify()
 
@@ -23,6 +24,7 @@ server.register(fastifyCookie)
 
 server.register(UserRoutes)
 server.register(GymRoutes)
+server.register(CheckInRoutes)
 
 server.setErrorHandler((error, _, reply) => {
    if (error instanceof ZodError) {
