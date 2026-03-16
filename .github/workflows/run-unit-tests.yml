@@ -8,13 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 18
-          cache: 'npm'
+          run_install: false
 
-      - run: npm ci
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: 'pnpm'
 
-      - run: npm run test
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Linter
+        run: pnpm lint
+
+      - name: Run Unit Tests
+        run: pnpm test
